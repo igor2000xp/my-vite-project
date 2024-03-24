@@ -266,7 +266,8 @@ npm run prepare
 
 ```json
 {
-  "pattern": "(feat|fix|refactor)/(RSS-PZ-d+_)[a-zA-Z-]+",
+  # "pattern": "^(docs|chore|feat|fix|refactor|style|test){1}/RSS-PZ-\\d{2}_([a-z]+[A-Z]+)+",
+    "pattern": "^(docs|chore|feat|fix|refactor|style|test){1}/d{2}_[[:alpha:]]+[[:alpha:]|-|_]+",
   "errorMsg": "Branch name doesn't follow the defined repository rules"
 }
 ```
