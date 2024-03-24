@@ -227,3 +227,75 @@ module.exports = {
 };
 
 ```
+
+## Installing husky lint-staged validate-branch-name
+
+```bash
+npm install --save-dev husky lint-staged validate-branch-name
+```
+
+Run command
+
+```bash
+npm run prepare
+```
+
+```json
+  "scripts": {
+    ...
+    "lint": "eslint ./src",
+    "lint:fix": "eslint --fix ./src",
+    "format": "prettier --write ./src",
+    "ci:format": "prettier --check ./src",
+    "precommit": "lint-staged",
+    "prepare": "husky .husky"
+  },
+
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
+  },
+  "lint-staged": {
+    "{**/*.js,!(node_modules/**)}": ["eslint --fix"]
+  }
+
+```
+
+### Create .validate-branch-namerc.json file
+
+```json
+{
+  # "pattern": "^(docs|chore|feat|fix|refactor|style|test){1}/RSS-PZ-\\d{2}_([a-z]+[A-Z]+)+",
+    "pattern": "^(docs|chore|feat|fix|refactor|style|test){1}/d{2}_[[:alpha:]]+[[:alpha:]|-|_]+",
+  "errorMsg": "Branch name doesn't follow the defined repository rules"
+}
+```
+
+### pre-commit
+
+```bash
+npm run ci:format
+```
+
+### pre-push
+
+```bash
+npm run lint
+npx validate-branch-name
+```
+
+### It works as
+
+        "precommit script": Runs before each commit.
+        **husky configuration:**
+            hooks.pre-commit: Runs the npm run precommit script before committing.
+        lint-staged configuration:
+            Runs eslint --fix on all staged JavaScript files (excluding node_modules) to automatically fix formatting issues.
+
+### Explanation
+
+    When you try to commit changes, Husky triggers the precommit script, which in turn runs lint-staged.
+    lint-staged only runs ESLint on staged files, improving performance.
+    The eslint --fix flag instructs ESLint to attempt to fix formatting errors automatically based on your ESLint configuration.
+    If any errors or formatting issues are found, you'll be prompted to fix them or stage the changes again.
