@@ -1,4 +1,4 @@
-Absolutely! Here's how to create a TypeScript + ESLint + Prettier project using Vite with `.eslintrc.cjs` for ESLint configuration:
+Here's how to create a TypeScript + ESLint + Prettier project using Vite with `.eslintrc.cjs` for ESLint configuration:
 
 **1. Project Setup:**
 
